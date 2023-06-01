@@ -1,4 +1,4 @@
-package ru.belov.mortalkombatbversion;
+package ru.timur.mortalkombatbversion;
 
 import java.io.IOException;
 import java.util.logging.Level;
