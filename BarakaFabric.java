@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package mortalkombatbversion;
+package ru.belov.mortalkombatbversion;
 
 
 
@@ -12,6 +12,9 @@ package mortalkombatbversion;
  */
 public class BarakaFabric implements EnemyFabricInterface {
 
+    /**
+     * Создание вражеского персонажа 
+     */
     @Override
     public Player create(int i) {
         Player enemy;

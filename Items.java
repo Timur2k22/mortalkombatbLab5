@@ -2,33 +2,51 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package mortalkombatbversion;
+package ru.belov.mortalkombatbversion;
 
 /**
+ * Класс описания мешка с предметами
  *
  * @author Мария
  */
 public class Items {
-    
+
     private String name;
     private int count;
-    
-    public Items(String n, int c){
-        this.name=n;
-        this.count=c;
+
+    /**
+     * Конструктор
+     */
+    public Items(String n, int c) {
+        this.name = n;
+        this.count = c;
     }
-    
-    public void setName(String s){
-        this.name=s;
+
+    /**
+     * set метод
+     */
+    public void setName(String s) {
+        this.name = s;
     }
-    public void setCount(int c){
-        this.count+=c;
+
+    /**
+     * set метод
+     */
+    public void setCount(int c) {
+        this.count += c;
     }
-    
-    public String getName(){
+
+    /**
+     * get метод
+     */
+    public String getName() {
         return this.name;
     }
-    public int getCount(){
+
+    /**
+     * get метод
+     */
+    public int getCount() {
         return this.count;
     }
 }

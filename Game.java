@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package mortalkombatbversion;
+package ru.belov.mortalkombatbversion;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -19,7 +19,8 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
- *
+ * Класс описания игры
+ * Работа с эксель-файлом результатов
  * @author Мария
  */
 public class Game {
@@ -28,7 +29,12 @@ public class Game {
     ChangeTexts change = new ChangeTexts();
     Fight fight = new Fight();
     private ArrayList<Result> results = new ArrayList<>();
+    int location;
 
+    /**
+     * Создание вражеского игрока и установка начальных параметров
+     * @return enemy
+     */
     public Player NewEnemy(JLabel L1, JLabel L2,
             JLabel L3, JLabel L4, JProgressBar pr2) {
         action.setEnemyes();
@@ -38,13 +44,22 @@ public class Game {
         return enemy;
     }
     
-    public Human NewHuman(JProgressBar pr1){
-        Human human = new Human (0,80,16,1);
+    /**
+     * Создание персонажа игрока
+     * @param location заданное кол-во локаций в игре
+     * @return human
+     */
+    public Human NewHuman(JProgressBar pr1, int location){
+        Human human = new Human (0,80,16,1,  location);
         action.HP(human, pr1);
         pr1.setMaximum(human.getMaxHealth());
         return human;
     }
 
+    /**
+    * Добавление и запись результатов в файл в конце игры
+    * @throws IOException
+    */
     public void EndGameTop(Human human, JTextField text, JTable table) throws IOException {
         results.add(new Result(text.getText(), human.getPoints()));
         results.sort(Comparator.comparing(Result::getPoints).reversed());
@@ -52,6 +67,10 @@ public class Game {
         WriteToExcel();
     }
     
+    /**
+    * Запись результатов в файл
+    * @throws IOException
+    */
     public void WriteToExcel() throws IOException{
         XSSFWorkbook book = new XSSFWorkbook();
         XSSFSheet sheet = book.createSheet("Результаты ТОП 10");
@@ -67,23 +86,39 @@ public class Game {
                 r2.createCell(2).setCellValue(results.get(i).getPoints());
             }
         }
-        File f = new File("C:\\Users\\Мария\\Desktop\\Results.xlsx");
+        System.out.println(System.getProperty("user.dir"));
+        File f = new File(System.getProperty("user.dir")+"\\Results.xlsx");
         book.write(new FileOutputStream(f));
         book.close();
     }
     
+    /**
+     * Получение результатов
+    */
     public ArrayList<Result> getResults(){
         return this.results;
     }
 
+    /**
+    * Чтение результатов из файла
+    * @throws IOException
+    */
     public void ReadFromExcel() throws IOException{
-        XSSFWorkbook book = new XSSFWorkbook("C:\\Users\\Мария\\Desktop\\Results.xlsx");
+        XSSFWorkbook book = new XSSFWorkbook(System.getProperty("user.dir")+"\\Results.xlsx");
         XSSFSheet sh = book.getSheetAt(0);
         for (int i=1; i<=sh.getLastRowNum();i++) {
-            results.add(new Result(sh.getRow(i).getCell(1).getStringCellValue(),(int)sh.getRow(i).getCell(2).getNumericCellValue()));
+   
+            results.add(new Result(
+                    sh.getRow(i).getCell(1).getStringCellValue(),
+                    (int)sh.getRow(i).getCell(2).getNumericCellValue()
+                    )
+            );
         }
     }
     
+     /**
+     * Запись результатов в таблицу JFrame
+     */
     public void WriteToTable(JTable table){
         DefaultTableModel model = (DefaultTableModel)table.getModel();
         for (int i=0; i<results.size();i++){
